@@ -1,0 +1,154 @@
+import { useState } from 'react';
+import { Button } from "/components/ui/button"
+
+export default function SimpleWebsite() {
+  const [activeSection, setActiveSection] = useState('home');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setName('');
+    setEmail('');
+    setMessage('');
+    setTimeout(() => setSubmitted(false), 3000);
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground font-sans">
+      {/* Navigation */}
+      <nav className="bg-primary text-primary-foreground p-4 sticky top-0 z-50 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-2xl font-bold">MyWebsite</div>
+          <div className="hidden md:flex space-x-6">
+            <button onClick={() => setActiveSection('home')} className="hover:text-accent transition-colors">Home</button>
+            <button onClick={() => setActiveSection('services')} className="hover:text-accent transition-colors">Services</button>
+            <button onClick={() => setActiveSection('about')} className="hover:text-accent transition-colors">About</button>
+            <button onClick={() => setActiveSection('contact')} className="hover:text-accent transition-colors">Contact</button>
+          </div>
+          <button className="md:hidden">☰</button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="py-20 bg-secondary text-secondary-foreground">
+        <div className="container mx-auto text-center px-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">Welcome to My Simple Website</h1>
+          <p className="text-xl md:text-2xl mb-8 text-muted-foreground">
+            A modern, responsive website built with clean design principles
+          </p>
+          <Button 
+            onClick={() => setActiveSection('services')}
+            className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-3 text-lg"
+          >
+            Learn More
+          </Button>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-card text-card-foreground p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Web Design</h3>
+              <p>Beautiful, responsive websites that work perfectly on all devices with modern design principles.</p>
+            </div>
+            <div className="bg-card text-card-foreground p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Development</h3>
+              <p>Custom web applications built with the latest technologies and best practices.</p>
+            </div>
+            <div className="bg-card text-card-foreground p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Consulting</h3>
+              <p>Expert advice on digital strategy, user experience, and technology solutions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-16 bg-muted">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">About Us</h2>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-lg mb-6">
+              We are a passionate team dedicated to creating exceptional digital experiences. 
+              Our mission is to help businesses thrive in the digital world through innovative 
+              solutions and thoughtful design.
+            </p>
+            <p className="text-lg">
+              With years of experience in the industry, we understand what it takes to build 
+              websites that not only look great but also deliver real results for our clients.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+          <div className="max-w-md mx-auto">
+            {submitted && (
+              <div className="bg-green-100 text-green-800 p-4 rounded mb-6">
+                Thank you for your message! We'll get back to you soon.
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Message</label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={4}
+                  className="w-full p-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-3"
+              >
+                Send Message
+              </Button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-primary text-primary-foreground py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p>&copy; 2024 MyWebsite. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Built with modern web technologies
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
